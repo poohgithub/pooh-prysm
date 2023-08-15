@@ -1,0 +1,33 @@
+#!/bin/sh
+
+rm -rf $HOME/.pooh/cl/*
+sudo chmod 664 ~/.pooh/el/geth/jwtsecret
+sudo chmod 666 ~/.pooh/el/geth.ipc
+
+mkdir -p $HOME/.pooh
+mkdir -p $HOME/.pooh/cl
+mkdir -p $HOME/.pooh/cl/config
+cp -rf ./poohnet/config/* $HOME/.pooh/cl/config
+cp ./poohnet/pooh-deposit-cli/validator_keys/proposer_config.json $HOME/.pooh/cl/config
+
+. ~/.nvm/nvm.sh
+nvm use 16
+bazel run //beacon-chain --config=release -- \
+  --datadir=$HOME/.pooh/cl \
+  --execution-endpoint=$HOME/.pooh/el/geth.ipc \
+  --chain-config-file=$HOME/.pooh/cl/config/chain-config.yaml \
+  --accept-terms-of-use \
+  --p2p-host-ip=$(curl -s v4.ident.me) \
+  --contract-deployment-block=0 \
+  --p2p-allowlist=public \
+  --p2p-denylist=private \
+  --subscribe-all-subnets=false \
+  --slasher=false \
+  --rpc-max-page-size=500 \
+  --suggested-fee-recipient="0x8B595d325485a0Ca9d41908cAbF265E23C172847" \
+  --jwt-secret=$HOME/.pooh/el/geth/jwtsecret \
+  --genesis-state=$HOME/.pooh/cl/config/genesis.ssz \
+  --contract-deployment-block=0 \
+  --bootstrap-node="enr:-MK4QKgGfOERT1rm_yrpccDeyDU6zZyP_D6HX3ABe2a6JrlFagINJplOYAztkWiSqxIq2yTfaiI3kiCQOzF29qnCkDiGAYpKUaQWh2F0dG5ldHOIAAAAAAAAAACEZXRoMpBlx-CHLxwDAP__________gmlkgnY0gmlwhA-lwymJc2VjcDI1NmsxoQLpoS6ekBba7ZPiwg1DEqL7DTKCgkCRhBbNc4oDmY2r64hzeW5jbmV0cwCDdGNwgjLIg3VkcIIu4A"
+  
+

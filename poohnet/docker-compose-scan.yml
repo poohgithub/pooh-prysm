@@ -1,0 +1,70 @@
+version: '3.3'
+services:
+    el:
+        container_name: el
+        image: bosagora/agora-el-node:v1.0.1
+        ports:
+            - "8545:8545"
+            - "30303:30303"
+            - "30303:30303/udp"
+            - "6060:6060"
+        restart: always
+        volumes:
+            - $HOME/.agora/el:/data
+            - $HOME/agoranet/devnet/config/el:/config
+        command:
+            --datadir=/data
+            --syncmode=full
+            --networkid=12301
+            --bootnodes="enode://0358b78cf0764ee29f0e34b213ff938c4956ff0149b9f9be924664608870186d058941b5c54e8c2d1b71e8ed2a6f5728e89111bb81e1112a38e0162542285085@3.1.155.91:30301"
+            --http
+            --http.addr=0.0.0.0
+            --http.port=8545
+            --http.corsdomain=*
+            --http.api=eth,net,txpool,web3
+            --http.vhosts=*
+            --ws
+            --ws.port=8546
+            --ws.api=eth,net,web3
+            --ws.origins=*
+            --gcmode="archive"
+            --metrics
+            --metrics.addr=0.0.0.0
+            --metrics.port=6060
+
+    cl:
+        container_name: cl
+        image: bosagora/agora-cl-node:v1.0.3
+        ports:
+            - "8080:8080"
+            - "4000:4000"
+            - "13000:13000"
+            - "12000:12000/udp"
+        volumes:
+            - $HOME/.agora/cl:/cl
+            - $HOME/.agora/el:/el
+            - $HOME/agoranet/devnet/config/cl:/config
+        restart: always
+        command:
+            --chain-config-file=/config/chain-config.yaml
+            --config-file=/config/config.yaml
+            --datadir=/cl
+            --execution-endpoint=/el/geth.ipc
+            --p2p-host-ip=${P2P_HOST_IP}
+            --contract-deployment-block=22
+            --accept-terms-of-use
+            --grpc-gateway-port=3500
+            --rpc-port=4000
+            --monitoring-port=8080
+            --subscribe-all-subnets=false
+            --slasher=false
+            --rpc-max-page-size=500
+        depends_on:
+            - el
+
+    node_exporter:
+        container_name: node_exporter
+        image: quay.io/prometheus/node-exporter:latest
+        ports:
+            - "9100:9100"
+        restart: always

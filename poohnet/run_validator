@@ -1,0 +1,16 @@
+#!/bin/sh
+
+docker run -it \
+-v $HOME/.agora/cl:/cl \
+-v $HOME/agoranet/devnet/config/cl:/config \
+-v $HOME/.eth2validators/prysm-wallet-v2:/wallet \
+--network="host" \
+--name validator --rm \
+bosagora/agora-cl-validator:v1.0.3 \
+--datadir=/cl \
+--chain-config-file=/config/chain-config.yaml \
+--accept-terms-of-use \
+--beacon-rpc-provider=127.0.0.1:4000 \
+--wallet-dir=/wallet \
+--proposer-settings-file=/config/private/proposer_config.json \
+--wallet-password-file=/config/private/password.txt

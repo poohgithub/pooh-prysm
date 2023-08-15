@@ -25,7 +25,7 @@ yarn-error.log
 .vscode/
 
 # Ignore password file
-password.txt
+# password.txt
 
 # Dist files
 dist
@@ -41,3 +41,6 @@ jwt.hex
 
 # manual testing
 tmp
+
+# genesis.ssz decoding
+parsedState.json

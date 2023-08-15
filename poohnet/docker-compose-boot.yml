@@ -1,0 +1,35 @@
+version: '3.3'
+services:
+    el-boot:
+        container_name: el-boot
+        image: bosagora/agora-el-bootnode:v1.0.1
+        ports:
+            - "30301:30301"
+            - "30301:30301/udp"
+        restart: always
+        volumes:
+            - $HOME/agoranet/devnet/config/el:/config
+        command:
+            -nodekey=/config/bootkey/bootkey1
+            -verbosity=1
+            -addr=:30301
+            -nat extip:${P2P_HOST_IP}
+
+    cl-boot:
+        container_name: cl-boot
+        image: bosagora/agora-cl-bootnode:v1.0.3
+        ports:
+            - "4000:4000/udp"
+            - "5000:5000"
+        restart: always
+        command:
+            --external-ip ${P2P_HOST_IP}
+            --fork-version 2F1C0000
+            --private 5362dcd2dbc637609e58244b304346e0d2bd9787b0d96872b04dd5c76fdfa39c
+
+    node_exporter:
+        container_name: node_exporter
+        image: quay.io/prometheus/node-exporter:latest
+        ports:
+            - "9100:9100"
+        restart: always

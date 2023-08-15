@@ -1,0 +1,86 @@
+version: '3.3'
+services:
+    el:
+        container_name: el
+        image: bosagora/agora-el-node:v1.0.1
+        ports:
+            - "8545:8545"
+            - "30303:30303"
+            - "30303:30303/udp"
+            - "6060:6060"
+        restart: always
+        volumes:
+            - $HOME/.agora/el:/data
+            - $HOME/agoranet/devnet/config/el:/config
+        command:
+            --datadir=/data
+            --syncmode=full
+            --networkid=12301
+            --bootnodes="enode://0358b78cf0764ee29f0e34b213ff938c4956ff0149b9f9be924664608870186d058941b5c54e8c2d1b71e8ed2a6f5728e89111bb81e1112a38e0162542285085@3.1.155.91:30301"
+            --allow-insecure-unlock=true
+            --unlock=0x8532654aD638Db3deE3836B22B35f7Ca707428ca
+            --password=/config/password.txt
+            --mine=true
+            --metrics
+            --metrics.addr=0.0.0.0
+            --metrics.port=6060
+
+    cl:
+        container_name: cl
+        image: bosagora/agora-cl-node:v1.0.3
+        ports:
+            - "8080:8080"
+            - "13000:13000"
+            - "12000:12000/udp"
+        volumes:
+            - $HOME/.agora/cl:/cl
+            - $HOME/.agora/el:/el
+            - $HOME/agoranet/devnet/config/cl:/config
+        restart: always
+        command:
+            --chain-config-file=/config/chain-config.yaml
+            --config-file=/config/config.yaml
+            --datadir=/cl
+            --execution-endpoint=/el/geth.ipc
+            --p2p-host-ip=${P2P_HOST_IP}
+            --contract-deployment-block=22
+            --accept-terms-of-use
+            --grpc-gateway-port=3500
+            --rpc-port=4000
+            --monitoring-port=8080
+            --subscribe-all-subnets=true
+            --slasher=true
+        depends_on:
+            - el
+
+    val:
+        container_name: val
+        image: bosagora/agora-cl-validator:v1.0.3
+        ports:
+            - "8081:8081"
+        volumes:
+            - $HOME/.agora/cl:/cl
+            - $HOME/agoranet/devnet/config/cl:/config
+            - $HOME/.eth2validators/prysm-wallet-v2:/wallet
+        restart: always
+        command:
+            --chain-config-file=/config/chain-config.yaml
+            --datadir=/cl
+            --beacon-rpc-gateway-provider=cl:3500
+            --beacon-rpc-provider=cl:4000
+            --wallet-dir=/wallet
+            --proposer-settings-file=/config/private/proposer_config.json
+            --wallet-password-file=/config/private/password.txt
+            --accept-terms-of-use
+            --monitoring-host=0.0.0.0
+            --monitoring-port=8081
+        depends_on:
+            - el
+            - cl
+
+    node_exporter:
+        container_name: node_exporter
+        image: quay.io/prometheus/node-exporter:latest
+        ports:
+            - "9100:9100"
+        restart: always
