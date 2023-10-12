@@ -1,0 +1,14 @@
+#!/bin/sh
+
+. ~/.nvm/nvm.sh
+nvm use 16
+
+bazel run //validator --config=release -- \
+  --datadir=$HOME/.pooh/cl \
+  --chain-config-file=$HOME/.pooh/cl/config/chain-config.yaml \
+  --accept-terms-of-use \
+  --beacon-rpc-provider=127.0.0.1:4000 \
+  --wallet-dir=/$HOME/.eth2validators/prysm-wallet-v2 \
+  --wallet-password-file=$HOME/.pooh/cl/config/password.txt \
+  --proposer-settings-file=$HOME/.pooh/cl/config/proposer_config.json \
+  --suggested-fee-recipient="0x8B595d325485a0Ca9d41908cAbF265E23C172847"

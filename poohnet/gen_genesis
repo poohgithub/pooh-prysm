@@ -1,0 +1,3 @@
+ #!/bin/sh
+
+ ./eth2-testnet-genesis/eth2-testnet-genesis merge --config "./config/chain-config.yaml" --eth1-config "./config/genesis.json" --mnemonics "./config/mnemonics.yaml" --state-output "./config/genesis.ssz" --tranches-dir "./config/tranches"

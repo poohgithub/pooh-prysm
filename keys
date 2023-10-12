@@ -1,0 +1,9 @@
+#!/bin/sh
+
+rm -rf $HOME/.eth2validators
+rm -rf $HOME/.pooh/validator_keys
+
+mkdir $HOME/.pooh/validator_keys
+cp -rf ./poohnet/pooh-deposit-cli/validator_keys/* $HOME/.pooh/validator_keys
+
+./prysm.sh validator accounts import --keys-dir=$HOME/.pooh/validator_keys

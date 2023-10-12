@@ -166,7 +166,7 @@ func (vs *Server) getLocalPayload(ctx context.Context, blk interfaces.ReadOnlyBe
 			return nil, err
 		}
 	default:
-		return nil, errors.New("unknown beacon state version")
+		return nil, errors.New("unknown beacon state version pooh")
 	}
 
 	payloadID, _, err := vs.ExecutionEngineCaller.ForkchoiceUpdated(ctx, f, attr)
