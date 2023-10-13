@@ -28,6 +28,6 @@ bazel run //beacon-chain --config=release -- \
   --jwt-secret=$HOME/.pooh/el/geth/jwtsecret \
   --genesis-state=$HOME/.pooh/cl/config/genesis.ssz \
   --contract-deployment-block=0 \
-  --bootstrap-node="enr:-MK4QKgGfOERT1rm_yrpccDeyDU6zZyP_D6HX3ABe2a6JrlFagINJplOYAztkWiSqxIq2yTfaiI3kiCQOzF29qnCkDiGAYpKUaQWh2F0dG5ldHOIAAAAAAAAAACEZXRoMpBlx-CHLxwDAP__________gmlkgnY0gmlwhA-lwymJc2VjcDI1NmsxoQLpoS6ekBba7ZPiwg1DEqL7DTKCgkCRhBbNc4oDmY2r64hzeW5jbmV0cwCDdGNwgjLIg3VkcIIu4A"
+  --bootstrap-node="enr:-MK4QPP1dkann9wZj38DcZR-t8HlNXR026c1xhkO-w92JmpGNizAUvc7J7ihfV2Xx7EbQkw2gwXpkQ2WtgcMANe0YeaGAYsnd9tmh2F0dG5ldHOIAAAAAAAAAACEZXRoMpBlx-CHLxwDAP__________gmlkgnY0gmlwhA-lwymJc2VjcDI1NmsxoQKdy2kTvvwTF-0FZWngp5OeZ-0xxS7fsiKZkcJUvZy6k4hzeW5jbmV0cwCDdGNwgjLIg3VkcIIu4A"
   
 
