@@ -13,7 +13,7 @@ CONFIG_NAME: 'pooh-testnet'
 # TBD, 2**256-2**10 is a placeholder
 TERMINAL_TOTAL_DIFFICULTY: 0
 # By default, don't use these params
-TERMINAL_BLOCK_HASH: 0x9846616f20c4692ef88f0bed66ed0d5f8da03fff65599dcf02304b210c8896bc
+TERMINAL_BLOCK_HASH: 0x146fff05aed6f48ad893633e027cc56a8264a946ee6a0062ec11ddecaee2bc8e
 TERMINAL_BLOCK_HASH_ACTIVATION_EPOCH: 0
 
 # Genesis
@@ -24,8 +24,8 @@ MIN_GENESIS_ACTIVE_VALIDATOR_COUNT: 8
 MIN_GENESIS_TIME: 1697174728
 # [customized] Initial fork version
 GENESIS_FORK_VERSION: 0x2F1C0000
-# [customized] 60 seconds
-GENESIS_DELAY: 60
+# [customized] 300 seconds (5 min)
+GENESIS_DELAY: 300
 
 
 # Forking
@@ -86,8 +86,8 @@ PROPOSER_SCORE_BOOST: 70
 # Deposit contract
 # ---------------------------------------------------------------
 # [customized]
-DEPOSIT_CHAIN_ID: 12302
-DEPOSIT_NETWORK_ID: 12302
+DEPOSIT_CHAIN_ID: 12301
+DEPOSIT_NETWORK_ID: 12301
 DEPOSIT_CONTRACT_ADDRESS: 0x0420420420420420420420420420420420420420
 
 

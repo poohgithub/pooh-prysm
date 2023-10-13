@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd ./poohnet/eth2-testnet-genesis/
+make build
+cd ../../
