@@ -1,0 +1,3 @@
+ #!/bin/sh
+
+ ./poohnet/eth2-testnet-genesis/eth2-testnet-genesis merge --config "./poohnet/config/chain-config.yaml" --eth1-config "./poohnet/config/genesis.json" --mnemonics "./poohnet/config/mnemonics.yaml" --state-output "./poohnet/config/genesis.ssz" --tranches-dir "./poohnet/config/tranches"

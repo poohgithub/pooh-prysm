@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Create Keys
+cd ./poohnet/pooh-deposit-cli
+sudo chown -R $USER:$USER ./
+sudo chmod -R u+w ./
+./deposit.sh install
+./deposit.sh existing-mnemonic
+
+# Copy keys
+rm -rf $HOME/.eth2validators
+rm -rf $HOME/.pooh/validator_keys
+
+mkdir $HOME/.pooh/validator_keys
+cp -rf ./validator_keys/* $HOME/.pooh/validator_keys
+
+# Return to the root directory
+cd ../../
+
+./prysm.sh validator accounts import --keys-dir=$HOME/.pooh/validator_keys

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+zcli pretty bellatrix  BeaconState ./poohnet/config/genesis.ssz > parsedState.json
